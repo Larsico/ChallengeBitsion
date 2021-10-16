@@ -1,0 +1,71 @@
+﻿@model FicticiaSeguros.Core.DTOs.PersonUpdateDTO
+
+@{
+    ViewData["Title"] = "Editar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h5>Editar Información del asegurado</h5>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">Nombre</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Identification" class="control-label">Identificación</label>
+                <input asp-for="Identification" class="form-control" />
+                <span asp-validation-for="Identification" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Age" class="control-label">Edad</label>
+                <input asp-for="Age" class="form-control" />
+                <span asp-validation-for="Age" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="State" value="@Model.State"/> Estado @*@Html.DisplayNameFor(model => model.State)*@
+                    
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsDriver" value="@Model.IsDriver" />Maneja @*@Html.DisplayNameFor(model => model.IsDriver)*@
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="UseLenses" value="@Model.UseLenses" />Usa Lentes
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsDiabetic" value="@Model.IsDiabetic"/> Diabetico
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="OtherDisease" class="control-label">Otra dolencia</label>
+                <input asp-for="OtherDisease" class="form-control" />
+                <span asp-validation-for="OtherDisease" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <input asp-for="CreatedAt" type="hidden"/>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver al listado</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

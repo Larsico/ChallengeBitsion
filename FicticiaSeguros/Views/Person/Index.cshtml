@@ -1,0 +1,131 @@
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core; 
+
+@model X.PagedList.IPagedList<FicticiaSeguros.Core.DTOs.PersonsDTO>
+
+
+@{
+    ViewData["Title"] = "Listado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4 class="text-center" >Listado de Asegurados</h4>
+
+<hr />
+
+
+<div class="container">
+    <div class="row justify-content-md-center">
+        
+        <div class="col col-md-auto">
+            <a asp-action="Create" class="btn btn-success btn-sm">Alta Persona</a>
+        </div>
+
+        <div class="col col-md-auto">
+            <form asp-action="Index" method="get">
+                <div class="form-group">
+
+                   Buscar por Nombre: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+                    <input type="submit" value="Buscar" class="btn btn-sm btn-success" /> | <a asp-action="Index"> Volver a Listado </a>| Cant. Items:
+
+                </div>
+            </form>
+        </div>
+        
+        <div class="col col-md-auto">
+            <div class="row">
+                
+                
+                <select style="width: auto !important; margin-right: 1rem" name="PageSize" id="PageSize" class="form-control">
+                    <!option @if ((int)ViewBag.PageSize == 10) { @Html.Raw("selected") } value="10">10</!option>
+                    <!option @if ((int)ViewBag.PageSize == 25) { @Html.Raw("selected") } value="25">25</!option>
+                    <!option @if ((int)ViewBag.PageSize == 50) { @Html.Raw("selected") } value="50">50</!option>
+                    <!option @if ((int)ViewBag.PageSize == 100) { @Html.Raw("selected") } value="100">100</!option>
+                </select>
+
+                <input type="submit" value="Aplicar" class="btn btn-sm btn-primary" />
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.ActionLink("Nombre", "Index", new { sortOrder = ViewBag.NameSortParm })
+            </th>
+            <th>
+                Identificación
+            </th>
+            <th>
+                Edad
+            </th>
+            <th>
+                Estado
+            </th>
+            <th>
+                @Html.ActionLink("Fecha Alta", "Index", new { sortOrder = ViewBag.DateSortParm })
+            </th>
+            <th>
+                Acciones
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Identification)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Age)
+                </td>
+                <td>
+                    @if (!item.State)
+                    {
+                       @:Inactivo
+                    }
+                    else
+                    {
+                        @:Activo
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                </td>
+                <td>
+                    <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                    <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@item.Id">Detalles</a> |
+                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<hr/>
+
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col col-md-2" align="left">
+            Pagina @( Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber ) de @Model.PageCount
+        </div>
+        <div class="col-md-auto">
+            @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", "Person", new { page, pageSize = ViewBag.PageSize }))
+        </div>
+        <div class="col col-md-2" align="right">
+            Items totales @Model.TotalItemCount
+        </div>
+    </div>
+</div>
+
+

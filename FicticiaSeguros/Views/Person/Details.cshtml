@@ -1,0 +1,100 @@
+﻿@model FicticiaSeguros.Core.DTOs.PersonDetailsDTO
+
+@{
+    ViewData["Title"] = "Detalles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div>
+    <h4>Detalles del asegurado</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            <text>Nombre:</text> 
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            <text>Identificación:</text>
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Identification)
+        </dd>
+        <dt class="col-sm-2">
+            <text>Edad:</text>
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Age)
+        </dd>
+        <dt class="col-sm-2">
+            <text>Estado:</text>
+        </dt>
+        <dd class = "col-sm-10">
+            @if (!Model.State)
+            {
+                @:Inactivo
+            }
+            else
+            {
+                @:Activo
+            }
+        </dd>
+        <dt class="col-sm-2">
+            <text>Conductor: </text>
+        </dt>
+        <dd class = "col-sm-10">
+            @if (!Model.IsDriver)
+            {
+                @:No
+            }
+            else
+            {
+                @:Si
+            }
+        </dd>
+        <dt class="col-sm-2">
+            <text>Usa Lentes:</text>
+        </dt>
+        <dd class="col-sm-10">
+            @if (!Model.UseLenses)
+            {
+                @:No
+            }
+            else
+            {
+                @:Si
+            }
+        </dd>
+        <dt class = "col-sm-2">
+            <text>Diabetico:</text>
+        </dt>
+        <dd class="col-sm-10">
+            @if (!Model.IsDiabetic)
+            {
+                @:No
+            }
+            else
+            {
+                @:Si
+            }
+        </dd>
+        <dt class = "col-sm-2">
+            <text>Otra Dolencia:</text>
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.OtherDisease)
+        </dd>
+        <dt class = "col-sm-2">
+            <text>Fecha de Alta:</text>
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CreatedAt)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary btn-sm">Editar</a> |
+    <a asp-action="Index" class="btn btn-success btn-sm">Volver al listado</a>
+</div>
